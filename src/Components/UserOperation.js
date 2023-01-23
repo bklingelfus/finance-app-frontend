@@ -112,7 +112,7 @@ const UserOperation =(props)=> {
         } else if (props.user.balance<(quantity*assetFinance.currentPrice.raw) && newOrder.type==='Buy'){
             setError('Insufficient funds for operation!')
         } else {
-            createOrder(newOrder)
+            props.createOrder(newOrder)
             let updatedUser = {
                 id: props.user.id,
                 name: props.user.name,
@@ -150,14 +150,14 @@ const UserOperation =(props)=> {
         }, (err) => console.log(err))
         .catch((error) => console.log(error))     
     }
-    const createOrder = (newOrder) => {
-        axios.post(props.baseURL + 'order/insert', newOrder, { withCredentials: true })
-        .then((res) => {
-            console.log(res)
+    // const createOrder = (newOrder) => {
+    //     axios.post(props.baseURL + 'order/insert', newOrder, { withCredentials: true })
+    //     .then((res) => {
+    //         console.log(res)
 
-        }, (err) => console.log(err))
-        .catch((error) => console.log(error))     
-    }
+    //     }, (err) => console.log(err))
+    //     .catch((error) => console.log(error))     
+    // }
     const getInfo = () => {
         axios.get("https://query1.finance.yahoo.com/v10/finance/quoteSummary/"+ ((props.currentAsset).toLowerCase()) +"?modules=assetProfile")
         .then((res) => {

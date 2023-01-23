@@ -117,6 +117,14 @@ const User =(props)=> {
         .catch((error) => console.log(error))     
     }
 
+    const createOrder = (newOrder) => {
+        axios.post(props.baseURL + 'order/insert', newOrder, { withCredentials: true })
+        .then((res) => {
+            console.log(res)
+
+        }, (err) => console.log(err))
+        .catch((error) => console.log(error))     
+    }
     // HTML Functions
 
     // Render
@@ -167,6 +175,7 @@ const User =(props)=> {
             user={props.user}
             setUser={props.setUser}
             setUserDisplay={props.setUserDisplay}
+            createOrder={createOrder}
         />:null}
     </section>
     );
