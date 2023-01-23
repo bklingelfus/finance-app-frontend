@@ -53,7 +53,7 @@ const UserPortfolio =(props)=> {
                                 {(Math.round(((stock.lastsale-stock.avgprice)/stock.lastsale)* 100) / 100).toFixed(2)}%
                             </td>
                             <td className={((stock.avgprice*stock.quantity)/props.total)===0?"fgo":(((stock.avgprice*stock.quantity)/props.total)>0?"green":"red")}>
-                            {(Math.round((((stock.avgprice*stock.quantity)/props.total)/stock.lastsale)* 100) / 100).toFixed(2)}%
+                            {(Math.round((((stock.avgprice*stock.quantity)/props.total))* 100)).toFixed(2)}%
                             </td>
                         </tr>
                     )
