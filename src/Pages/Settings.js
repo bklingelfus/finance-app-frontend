@@ -60,32 +60,7 @@ const Settings =(props)=> {
             darkMode: user.darkMode,
             balance: user.balance,
         }
-        let quantity = 0
-        for (let i=0;i<event.target.length;i++){
-            let change = event.target[i].value
-            if (event.target[i].value === "") {
-                change = event.target[i].placeholder
-            }
-            if (event.target[i].name === "balance") {                  
-                quantity = (event.target[i].value)*ops
-                change = user.balance + (event.target[i].value)*ops
-            }
-            editedUser = {...editedUser, [event.target[i].name]:change}
-        }
-        let order = {
-            type: (ops===1?"Deposit":"Withdraw"),
-            quantity:quantity,
-            price: 1,
-            user: props.user.id,
-            asset: 4
-        }
-        if(quantity*(-1)>props.user.balance){
-            setError(true)
-        } else {
-            createOrder(order);
-            setUser(editedUser)
-            setDisplay(1)
-        }
+        props.setUser(editedUser)
     };
     const toggleNotifications =(event)=> {        
         let change = false;
@@ -125,15 +100,6 @@ const Settings =(props)=> {
         }, (err) => console.log(err))
         .catch((error) => console.log(error))  
     };
-    const createOrder =  (order) => {
-        axios.post(props.baseURL + 'order/insert', order, { withCredentials: true })
-        .then((res) => {
-
-            console.log(res)
-
-        }, (err) => console.log(err))
-        .catch((error) => console.log(error))     
-    }
 
     // HTML Functions
     const HtmlDelete =()=> {
