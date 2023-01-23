@@ -76,8 +76,8 @@ const Settings =(props)=> {
         if(ops===-1 && quantity*(-1)>props.user.balance){
             setError(true)
         } else {
-            createOrder(order);
             setUser(editedUser)
+            createOrder(order);
             setDisplay(1)
         }
     };
