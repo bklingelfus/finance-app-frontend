@@ -137,11 +137,17 @@ const Settings =(props)=> {
 
     // HTML Functions
     const HtmlDelete =()=> {
-        return (<button onClick={deleteButton}>Delete</button>)
+        return (
+        <div className='delete'>
+            <h1>Delete Account</h1>
+            <p>This will <span className='highlight'>permanently</span> delete your account.</p>
+            <p className='warning'>* Any amount not withdrawn will be lost.</p>
+            <button className='delete-button' onClick={deleteButton}>Delete</button>
+        </div>)
     };
     const HtmlSettings =()=> {
         return (
-        <>
+        <div className='settings'>
             <h1>Settings</h1>
             <p>Dark Mode:</p>
             <label className="switch">
@@ -153,12 +159,12 @@ const Settings =(props)=> {
                 <input onChange={toggleNotifications} name='notifications' type="checkbox" checked={user.notifications===true}/>
                 <span className='slider'></span>
             </label>
-        </>
+        </div>
         )
     };
     const HtmlDeposit =()=> {
         return (
-        <>
+        <div className='finance'>
             <h1>Manage Finances</h1>
             <div>
             <label htmlFor="html">Deposit:</label>
@@ -180,12 +186,12 @@ const Settings =(props)=> {
                 <br/>
                 <input className='form-button' type='submit'/>
             </form>
-        </>
+        </div>
         )
     };
     const HtmlProfile =()=> {
         return (
-        <>
+        <div className='profile'>
             <h1>Profile</h1>
             <button onClick={()=>{changeDisplay(8)}}>Edit Profile</button>
             <h3>ID:</h3>
@@ -197,17 +203,17 @@ const Settings =(props)=> {
             <h3>Profile Image:</h3>
             <p>{props.user.profileImage}</p>
             <h3>Balance:</h3>
-            <p>{(Math.round(props.user.balance * 100) / 100).toFixed(2)}</p>
+            <p>$ {(Math.round(props.user.balance * 100) / 100).toFixed(2)}</p>
             <h3>Notifications:</h3>
-            <p>{(props.user.notifications===true)?"True":"False"}</p>
+            <p>{(props.user.notifications===true)?"On":"Off"}</p>
             <h3>Dark Mode:</h3>
-            <p>{(props.user.darkMode===true)?"True":"False"}</p>
-        </>
+            <p>{(props.user.darkMode===true)?"On":"Off"}</p>
+        </div>
         )
     };
     const HtmlEditProfile =()=> {
         return (
-        <>
+        <div id='login'>
             <h1>EditProfile</h1>
             <form onSubmit={editSubmit}>
                 <label htmlFor="name">Name:</label>
@@ -227,29 +233,29 @@ const Settings =(props)=> {
                 <br/>
                 <input className='form-button' type='submit'/>
             </form>
-        </>
+        </div>
         )
     };
 
     // Render
     return (
     <section id='settings'>
-        <h1>Settings</h1>
+        <h1>Profile Settings</h1>
         <div id='settings-mobile'>
             {display>0?
-            <button onClick={()=>{changeDisplay(0)}}>
+            <button id='back' onClick={()=>{changeDisplay(0)}}>
                 <i className="fa-sharp fa-solid fa-arrow-left"></i>
             </button>
             :null}
             {(display===0)?
             <div id='settings-options'>
                 <ul>
-                    <li onClick={()=>{changeDisplay(1)}}>Profile</li>
-                    <li onClick={()=>{changeDisplay(3)}}>Settings</li>
-                    <li onClick={()=>{changeDisplay(4)}}>Finances</li>
-                    <li onClick={()=>{changeDisplay(5)}}>Delete Account</li>
-                    <li>
-                        <button onClick={logout}>Log Out</button>
+                    <li className='option' onClick={()=>{changeDisplay(1)}}>Profile</li>
+                    <li className='option' onClick={()=>{changeDisplay(3)}}>Settings</li>
+                    <li className='option' onClick={()=>{changeDisplay(4)}}>Finances</li>
+                    <li className='option' onClick={()=>{changeDisplay(5)}}>Delete Account</li>
+                    <li className='option'>
+                        <button id='logout' onClick={logout}>Log Out</button>
                     </li>
                 </ul>
             </div>            
@@ -263,12 +269,12 @@ const Settings =(props)=> {
         <div id='settings-browser'>
             <div id='settings-options'>
                 <ul>
-                    <li onClick={()=>{changeDisplay(0)}}>Profile</li>
-                    <li onClick={()=>{changeDisplay(3)}}>Settings</li>
-                    <li onClick={()=>{changeDisplay(4)}}>Finances</li>
-                    <li onClick={()=>{changeDisplay(5)}}>Delete Account</li>
-                    <li>
-                        <button onClick={logout}>Log Out</button>
+                    <li className='option' onClick={()=>{changeDisplay(0)}}>Profile</li>
+                    <li className='option' onClick={()=>{changeDisplay(3)}}>Settings</li>
+                    <li className='option' onClick={()=>{changeDisplay(4)}}>Finances</li>
+                    <li className='option' onClick={()=>{changeDisplay(5)}}>Delete Account</li>
+                    <li className='option'>
+                        <button id='logout' onClick={logout}>Log Out</button>
                     </li>
                 </ul>
             </div>

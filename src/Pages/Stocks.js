@@ -76,11 +76,20 @@ const Stock =(props)=> {
                             <>
                             {(result.symbol==="USD")?
                             null
-                            :<div onClick={()=>{goToAsset(result.symbol)}} id={index}>
-                                <img alt='Stock Logo'></img>                               
-                                <p>{result.symbol}</p>   
-                                <p>{result.name}</p>
-                            </div>}
+                            :<>
+                            <div className='search-options' onClick={()=>{goToAsset(result.symbol)}} id={index}>
+                                <div className='stock-logo'>
+                                    <img src={"https://s3.polygon.io/logos/"+(result.symbol).toLowerCase()+"/logo.png"} alt='Stock Logo'></img>  
+                                </div>
+                                <div className='stock-symbol'>                   
+                                    <p>{result.symbol}</p>  
+                                </div>
+                                <div className='stock-name'>  
+                                    <p>{result.name}</p>
+                                </div>         
+                            </div>
+                            <div className='spacer'></div>
+                            </>}
                             </>
                         )
                     })}
@@ -91,11 +100,10 @@ const Stock =(props)=> {
 
     // Render
     return (
-    <section>
-        <h1>Stock</h1>
+    <section id='stocks'>
         <div className='page-nav'>
             <div>
-                <p onClick={()=>{props.setStockDisplay(0)}}>Home</p>
+                <p className='fgo' onClick={()=>{props.setStockDisplay(0)}}>Home</p>
             </div>
             <div>
                 <p>Letter from Experts</p>

@@ -18,11 +18,11 @@ const Footer =(props)=> {
     return (
     <footer>
         <div>
-            <img alt='Logo'></img>
-            <p>finance app Inc.</p>
+            <img src={require('../logo.png')} alt='Logo'></img>
+            <p>FA Inc.</p>
         </div>
-        <p>FA Inc. is licensed under ...</p>
-        <p>for aditional information go to ...</p>
+        <p>Licensed under ...</p>
+        <p>additional information go to ...</p>
     </footer>
     );
 }

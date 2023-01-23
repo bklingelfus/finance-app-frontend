@@ -45,7 +45,7 @@ const Navbar =(props)=> {
     // Render
     return(
         <header>
-            <nav className='navbar'>
+            <nav className={'navbar'}>
                 <div onClick={hamburguerClick} className={'hamburguer '+ ((hamburguer===true)?'active':'')}>
                     <span className='bar'></span>
                     <span className='bar'></span>
@@ -96,7 +96,7 @@ const Navbar =(props)=> {
                     </li> 
                     {(dropdown===2)?
                     <ul className='dropdown-mobile'>
-                        <li>Stock Market</li>
+                        <li onClick={()=>{changePage(2)}}>Stock Market</li>
                         <li>Real State <span className='coming-soon'>(coming soon)</span></li>
                         <li>Bonds <span className='coming-soon'>(coming soon)</span></li>
                         <li>Options Market<span className='coming-soon'>(coming soon)</span></li>
@@ -116,7 +116,7 @@ const Navbar =(props)=> {
                     </li> 
                     {(dropdown===3)?
                     <ul className='dropdown-mobile'>
-                        <li>News</li>
+                        <li onClick={()=>{changePage(3)}}>News</li>
                         <li>Education <span className='coming-soon'>(coming soon)</span></li>
                     </ul>
                     :null}
@@ -134,7 +134,7 @@ const Navbar =(props)=> {
                     :
                     <>
                     <button onClick={()=>{changePage(4)}}>
-                    Profile
+                        <i class="fa-solid fa-user"></i>
                     </button>
                     </>
                     }

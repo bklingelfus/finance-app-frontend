@@ -17,6 +17,11 @@ const Register =(props)=> {
     });
 
     // On Load
+    useEffect(()=>{
+        if(props.user.id!=0){
+            props.setPage(4)
+        }
+    },[])
 
     // Page Functions
     const handleChange =(event)=>{
@@ -47,7 +52,7 @@ const Register =(props)=> {
 
     // Render
     return (
-    <section>
+    <section id='login'>
         <h1>Register</h1>
             <form onSubmit={loginSubmit}>
                 <label htmlFor="name">Name:</label>

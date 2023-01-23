@@ -16,6 +16,9 @@ const User =(props)=> {
     // On Load
     useEffect(()=>{
         getOrders()
+        if (props.user.id===0){
+            props.setPage(5)
+        }
     },[]);
     useEffect(()=>{
         const interval = setInterval(()=>{
@@ -34,6 +37,7 @@ const User =(props)=> {
         buildPortfolio()
     },[orders]);
     useEffect(()=>{
+        console.log(portfolio)
         getTotal()
     },[portfolio]);
 
@@ -64,7 +68,7 @@ const User =(props)=> {
                     let newQuantity = 0;  
                     let newPrice =0;
                     if (orders[i].type === "Buy") {
-                        newPrice =(asset[0].quantity*asset[0].avgprice + orders[i].quantity*orders[i].price)/newQuantity;
+                        newPrice =(asset[0].quantity*asset[0].avgprice + orders[i].quantity*orders[i].price)/(orders[i].quantity+asset[0].quantity);
                     } else {
                         newPrice = asset[0].avgprice
                     }    
@@ -73,7 +77,7 @@ const User =(props)=> {
                     let newAsset = {
                         symbol: asset[0].symbol,
                         name: asset[0].name,
-                        avgprice: newPrice,
+                        avgprice: (Math.round(newPrice* 100) / 100).toFixed(2),
                         lastsale: asset[0].lastsale,
                         quantity: newQuantity,
                         lastOperation: orders[i].date,
@@ -106,8 +110,8 @@ const User =(props)=> {
     const getOrders =  () => {
         axios.get(props.baseURL + 'order/fetch', { withCredentials: true })
         .then((res) => {
-
-            setOrders(res.data.message)
+            let newOrders = (res.data.message).sort( (a,b) => a.id - b.id );
+            setOrders(newOrders)
 
         }, (err) => console.log(err))
         .catch((error) => console.log(error))     
@@ -118,13 +122,12 @@ const User =(props)=> {
     // Render
     return (
     <section id='user'>
-        <h1>User</h1>
         <div className='page-nav'>
             <div>
-                <p onClick={()=>{props.setUserDisplay(0)}}>Overview</p>
+                <p className={(props.userDisplay===0)?'fgo':''} onClick={()=>{props.setUserDisplay(0)}}>Overview</p>
             </div>
             <div>
-                <p onClick={()=>{props.setUserDisplay(1)}}>Operations</p>
+                <p className={(props.userDisplay===1)?'fgo':''} onClick={()=>{props.setUserDisplay(1)}}>Operations</p>
             </div>
             <div>
                 <p>In Depth Analysis</p>
@@ -133,13 +136,26 @@ const User =(props)=> {
                 <p>Recommendations</p>
             </div>
         </div>
-        <div>
-            <p>Current Balance:</p>
-            <p>$ {(Math.round(props.user.balance * 100) / 100).toFixed(2)}</p>
-            <p>Total Portfolio Value:</p>
-            <p>$ {total}</p>
+        <div id='current-balance'>
+            <div id='current'>
+                <p className='cat'>Current Balance:</p>
+                <p className='value'>$ {(Math.round(props.user.balance * 100) / 100).toFixed(2)}</p>
+            </div>
+            <div id='divide'></div>
+            <div id='total'>
+                <p className='cat'>Portfolio Value:</p>
+                <p className='value'>$ {total}</p>
+            </div>
         </div>
-        {(props.userDisplay===0)?<UserPortfolio/>:null}
+        {(props.userDisplay===0)?<UserPortfolio
+            user={props.user}
+            orders={orders}
+            portfolio={portfolio}
+            setPage={props.setPage}
+            setStockDisplay={props.setStockDisplay}
+            setCurrentAsset={props.setCurrentAsset}
+            total={total}
+        />:null}
         {(props.userDisplay===1)?
         <UserOperation 
             currentAsset={props.currentAsset}

@@ -66,7 +66,7 @@ const App =()=> {
   return (
     <main onClick={()=>{setSearchPage(false)}}>
     <Navbar setPage={setPage} page={page} user={user} setUserDisplay={setUserDisplay}/>
-    {(page === 0?<Home user={user}/>:null)}
+    {(page === 0?<Home user={user} setPage={setPage}/>:null)}
     {(page === 1?<User
       setUserDisplay={setUserDisplay}
       userDisplay={userDisplay}
@@ -99,15 +99,17 @@ const App =()=> {
           baseURL={baseURL}
     />:null)}
     {(page === 5?<Login 
+          user={user} 
           setPage={setPage} 
           baseURL={baseURL}
           setUser={setUser}
     />:null)}
     {(page === 6?<Register 
+          user={user} 
           setPage={setPage} 
           baseURL={baseURL}
     />:null)}
-    <Footer/>
+    <Footer user={user}/>
     </main>
   );
 }

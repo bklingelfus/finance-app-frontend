@@ -13,8 +13,14 @@ const UserOperation =(props)=> {
     const [type, setType] = useState('');
     const [quantity, setQuantity] = useState(0)
     const [assetInfo, setAssetInfo] = useState({})
-    const [assetFinance, setAssetFinance] = useState({currentPrice:{raw:0}})
-    const [assetData, setAssetData] = useState({})
+    const [assetFinance, setAssetFinance] = useState({
+        currentPrice:{raw:0},
+        recommendationKey:'',
+        numberOfAnalystOpinions:{raw:0}
+    })
+    const [assetData, setAssetData] = useState({
+        pegRatio:{raw:0, fmt:''}
+    })
     const [error, setError] = useState('')
 
     // On Load
@@ -189,11 +195,20 @@ const UserOperation =(props)=> {
                             <>
                             {(result.symbol==="USD")?
                             null
-                            :<div onClick={()=>{goToAsset(result.symbol)}} id={result.index}>
-                                <img alt='Stock Logo'></img>                               
-                                <p>{result.symbol}</p>   
-                                <p>{result.name}</p>
-                            </div>}
+                            :<>
+                            <div className='search-options' onClick={()=>{goToAsset(result.symbol)}} id={index}>
+                                <div className='stock-logo'>
+                                    <img src={"https://s3.polygon.io/logos/"+(result.symbol).toLowerCase()+"/logo.png"} alt='Stock Logo'></img>  
+                                </div>
+                                <div className='stock-symbol'>                   
+                                    <p>{result.symbol}</p>  
+                                </div>
+                                <div className='stock-name'>  
+                                    <p>{result.name}</p>
+                                </div>         
+                            </div>
+                            <div className='spacer'></div>
+                            </>}
                             </>
                         )
                     })}
@@ -201,10 +216,11 @@ const UserOperation =(props)=> {
             </div>
         )
     }
+    
     const HtmlOperation =()=> {
         return (
-            <div>
-                <h1>Asset Operation</h1>
+            <div id='operation'>
+                <h1>{searchResult[0].symbol} Stock Operation</h1> 
                 <div>
                     <div>
                         <label htmlFor='name'>Buy</label>
@@ -215,21 +231,31 @@ const UserOperation =(props)=> {
                     <div>     
                         <label htmlFor='name'>Quantity</label>
                         <input onChange={changeOrder} type='number' name='quantity'></input>
-                        <p>You own: {owned.total}</p>
+                        <p className='own'>You own: {owned.total}</p>
                     </div>  
                     <div>     
-                        <p>Current Price: $ {(Math.round(assetFinance.currentPrice.raw* 100) / 100).toFixed(2)}</p>
-                        <p>Your Avg. Price: $ {owned.avgprice}</p>
+                        <p className='c-price'>Current Price: $ {(Math.round(assetFinance.currentPrice.raw* 100) / 100).toFixed(2)}</p>
+                        <p className='own'>Your Avg. Price: $ {(Math.round(owned.avgprice* 100) / 100).toFixed(2)}</p>
                     </div>     
-                    <button onClick={submitOrder}>Submit Order</button>
+                    <button className='submit' onClick={submitOrder}>Submit Order</button>
                     {(error.length>0)?
                     <p>{error}</p>
                     :null
                     }  
                 </div>
-                <div>
+                <div className='more-info'>
                     <button onClick={goToAssetInfo}>More Info</button>
-                    <h1>{searchResult[0].symbol}</h1>                    
+                    <h1>{searchResult[0].symbol} - Basic Info</h1> 
+                    <p><span>Name: </span>{searchResult[0].name}</p> 
+                    <p><span>Price: </span>$ {(Math.round(assetFinance.currentPrice.raw* 100) / 100).toFixed(2)}</p>  
+                    <p className={(assetData.pegRatio.raw>0 && assetData.pegRatio.raw<=1)?"green":"red"}><span>PEG Ratio: </span>{assetData.pegRatio.fmt}</p>                 
+                    <div>
+                    <p><span>Recommendation: </span>{(assetFinance.recommendationKey).replace('_'," ")}</p> 
+                    <p><span>Nº of Analyst: </span>{assetFinance.numberOfAnalystOpinions.raw}</p> 
+                    </div>
+                    <p><span>Overall Risk: </span>{assetInfo.overallRisk}</p> 
+                    <p className={(assetFinance.revenueGrowth.raw>0)?"green":"red"}><span>Revenue Growth: </span>{assetFinance.revenueGrowth.fmt}</p>                 
+                    <p className={(assetData.earningsQuarterlyGrowth.raw>0)?"green":"red"}><span>Earnings quartely growth: </span>{assetData.earningsQuarterlyGrowth.fmt}</p>   
                 </div>
             </div>
         )
@@ -238,7 +264,6 @@ const UserOperation =(props)=> {
     // Render
     return (
     <div>
-        <h1>UserOperation</h1>
         <form id='search-form' onSubmit={runSearch}>
             <input className='search-bar' type='text' placeholder='search for an asset' onChange={handleSearch}></input>
             <button className='search-submit' type='submit'>
