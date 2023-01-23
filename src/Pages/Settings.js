@@ -51,6 +51,9 @@ const Settings =(props)=> {
     const handleDeposit =(event)=> {
         event.preventDefault();
         let quantity = ops*event.target[0].value
+        console.log(quantity)
+        let newBalance = user.balance + quantity
+        console.log(newBalance)
         let editedUser = {
             id: user.id,
             name: user.name,
@@ -59,8 +62,9 @@ const Settings =(props)=> {
             profileImage: user.profileImage,
             notifications: user.notifications,
             darkMode: user.darkMode,
-            balance: (user.balance+quantity),
+            balance: newBalance,
         }
+        console.log(editedUser)
         let order = {
             type: (ops===1?"Deposit":"Withdraw"),
             quantity:quantity,
@@ -68,6 +72,7 @@ const Settings =(props)=> {
             user: props.user.id,
             asset: 4
         }
+        console.log(order)
         if(ops===-1 && quantity*(-1)>props.user.balance){
             setError(true)
         } else {
