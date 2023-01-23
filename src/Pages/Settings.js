@@ -48,20 +48,44 @@ const Settings =(props)=> {
         props.setUser({id:0,balance:0});
         props.setPage(0);
     };
-    const editSubmit =(event)=> {
+    const handleDeposit =(event)=> {
         event.preventDefault();
         let editedUser = {
             id: user.id,
-            name: ((event.target[0].value.length<1)?event.target[0].placeholder:event.target[0].value),
-            email: ((event.target[1].value.length<1)?event.target[1].placeholder:event.target[1].value),
+            name: user.name,
+            email: user.email,
             password: user.password,
-            profileImage: ((event.target[2].value.length<1)?event.target[2].placeholder:event.target[2].value),
+            profileImage: user.profileImage,
             notifications: user.notifications,
             darkMode: user.darkMode,
             balance: user.balance,
         }
-        setUser(editedUser)
-        setDisplay(1)
+        let quantity = 0
+        for (let i=0;i<event.target.length;i++){
+            let change = event.target[i].value
+            if (event.target[i].value === "") {
+                change = event.target[i].placeholder
+            }
+            if (event.target[i].name === "balance") {                  
+                quantity = (event.target[i].value)*ops
+                change = user.balance + (event.target[i].value)*ops
+            }
+            editedUser = {...editedUser, [event.target[i].name]:change}
+        }
+        let order = {
+            type: (ops===1?"Deposit":"Withdraw"),
+            quantity:quantity,
+            price: 1,
+            user: props.user.id,
+            asset: 4
+        }
+        if(quantity*(-1)>props.user.balance){
+            setError(true)
+        } else {
+            createOrder(order);
+            setUser(editedUser)
+            setDisplay(1)
+        }
     };
     const toggleNotifications =(event)=> {        
         let change = false;
@@ -80,6 +104,21 @@ const Settings =(props)=> {
             change = true
         }
         setUser({...user, [event.target.name]:change});  
+    }
+    const editSubmit =(event)=> {
+        event.preventDefault();
+        let editedUser = {
+            id: user.id,
+            name: ((event.target[0].value.length<1)?event.target[0].placeholder:event.target[0].value),
+            email: ((event.target[1].value.length<1)?event.target[1].placeholder:event.target[1].value),
+            password: user.password,
+            profileImage: ((event.target[2].value.length<1)?event.target[2].placeholder:event.target[2].value),
+            notifications: user.notifications,
+            darkMode: user.darkMode,
+            balance: user.balance,
+        }
+        setUser(editedUser)
+        setDisplay(1)
     }
 
     // Connection Functions 
@@ -101,6 +140,15 @@ const Settings =(props)=> {
         }, (err) => console.log(err))
         .catch((error) => console.log(error))  
     };
+    const createOrder =  (order) => {
+        axios.post(props.baseURL + 'order/insert', order, { withCredentials: true })
+        .then((res) => {
+
+            console.log(res)
+
+        }, (err) => console.log(err))
+        .catch((error) => console.log(error))     
+    }
 
     // HTML Functions
     const HtmlDelete =()=> {
@@ -145,7 +193,7 @@ const Settings =(props)=> {
             <p>Right now your limit is ${props.user.balance}.</p>
             </>
             :null}
-            <form onSubmit={editSubmit}>
+            <form onSubmit={handleDeposit}>
                 <label htmlFor="name">{(ops===1)?"Deposit":"Withdraw"} Amount:</label>
                 <br/>
                 <input type='number' name="balance"/>
