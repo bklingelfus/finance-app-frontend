@@ -16,10 +16,12 @@ const UserOperation =(props)=> {
     const [assetFinance, setAssetFinance] = useState({
         currentPrice:{raw:0},
         recommendationKey:'',
-        numberOfAnalystOpinions:{raw:0}
+        numberOfAnalystOpinions:{raw:0},
+        revenueGrowth:{raw:0}
     })
     const [assetData, setAssetData] = useState({
-        pegRatio:{raw:0, fmt:''}
+        pegRatio:{raw:0, fmt:''},
+        earningsQuarterlyGrowth:{raw:0, fmt:''}
     })
     const [error, setError] = useState('')
 
