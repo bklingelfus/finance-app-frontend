@@ -73,7 +73,6 @@ const Settings =(props)=> {
         } else {
             createOrder(order);
             setUser(editedUser)
-            editUser(editedUser)
             setDisplay(1)
         }
     };
@@ -139,15 +138,6 @@ const Settings =(props)=> {
         }, (err) => console.log(err))
         .catch((error) => console.log(error))     
     }
-    const editUser = (editedUser) => {
-        axios.post(baseURL + 'user/edit', editedUser,{ withCredentials: true })
-        .then((res) => {
-            
-            console.log(res)
-
-        }, (err) => console.log(err))
-        .catch((error) => console.log(error))  
-    };
 
     // HTML Functions
     const HtmlDelete =()=> {
