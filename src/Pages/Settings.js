@@ -52,15 +52,16 @@ const Settings =(props)=> {
         event.preventDefault();
         let editedUser = {
             id: user.id,
-            name: user.name,
-            email: user.email,
+            name: ((event.target[0].value.length<1)?event.target[0].placeholder:event.target[0].value),
+            email: ((event.target[1].value.length<1)?event.target[1].placeholder:event.target[1].value),
             password: user.password,
-            profileImage: user.profileImage,
+            profileImage: ((event.target[2].value.length<1)?event.target[2].placeholder:event.target[2].value),
             notifications: user.notifications,
             darkMode: user.darkMode,
             balance: user.balance,
         }
-        props.setUser(editedUser)
+        setUser(editedUser)
+        setDisplay(1)
     };
     const toggleNotifications =(event)=> {        
         let change = false;
