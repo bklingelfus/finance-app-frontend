@@ -118,6 +118,9 @@ header div {
       background-color: var(--black);
       color: var(--gold);
     }
+    #profile button:hover i{
+      color: var(--gold);
+    }
   #profile i {
     font-size: 1.2em;
     color: var(--black);
