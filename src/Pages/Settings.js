@@ -50,6 +50,7 @@ const Settings =(props)=> {
     };
     const handleDeposit =(event)=> {
         event.preventDefault();
+        let quantity = ops*event.target[0].value
         let editedUser = {
             id: user.id,
             name: user.name,
@@ -58,19 +59,7 @@ const Settings =(props)=> {
             profileImage: user.profileImage,
             notifications: user.notifications,
             darkMode: user.darkMode,
-            balance: user.balance,
-        }
-        let quantity = 0
-        for (let i=0;i<event.target.length;i++){
-            let change = event.target[i].value
-            if (event.target[i].value === "") {
-                change = event.target[i].placeholder
-            }
-            if (event.target[i].name === "balance") {                  
-                quantity = (event.target[i].value)*ops
-                change = user.balance + (event.target[i].value)*ops
-            }
-            editedUser = {...editedUser, [event.target[i].name]:change}
+            balance: (user.balance+quantity),
         }
         let order = {
             type: (ops===1?"Deposit":"Withdraw"),
@@ -79,7 +68,7 @@ const Settings =(props)=> {
             user: props.user.id,
             asset: 4
         }
-        if(quantity*(-1)>props.user.balance){
+        if(ops===-1 && quantity*(-1)>props.user.balance){
             setError(true)
         } else {
             createOrder(order);
