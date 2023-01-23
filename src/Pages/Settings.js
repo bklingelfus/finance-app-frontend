@@ -14,7 +14,7 @@ const Settings =(props)=> {
         password: "",
         profileImage:"",
         notifications: false,
-        darkMode: true,
+        darkMode: false,
         balance: 0,
     });
     const [ops, setOps] = useState(1)
@@ -73,6 +73,7 @@ const Settings =(props)=> {
         } else {
             createOrder(order);
             setUser(editedUser)
+            props.setUser(editedUser)
             setDisplay(1)
         }
     };
