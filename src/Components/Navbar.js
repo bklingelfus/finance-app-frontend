@@ -134,7 +134,7 @@ const Navbar =(props)=> {
                     :
                     <>
                     <button onClick={()=>{changePage(4)}}>
-                        <i class="fa-solid fa-user"></i>
+                        <i className="fa-solid fa-user"></i>
                     </button>
                     </>
                     }
