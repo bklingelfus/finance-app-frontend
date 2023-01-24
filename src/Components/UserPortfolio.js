@@ -30,15 +30,18 @@ const UserPortfolio =(props)=> {
         <h1>Stocks Breakdown</h1>
         <div>
             <table className='stocks-breakdown'>
-                <tr>
-                    <th>Logo</th>
-                    <th>Symbol</th>
-                    <th>Stocks Owned</th>
-                    <th>Avg Price</th>
-                    <th>Current Price</th>
-                    <th>Growth</th>
-                    <th>% in Portfolio</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Logo</th>
+                        <th>Symbol</th>
+                        <th>Stocks Owned</th>
+                        <th>Avg Price</th>
+                        <th>Current Price</th>
+                        <th>Growth</th>
+                        <th>% in Portfolio</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {props.portfolio.map((stock,index)=>{
                     return(
                         <tr key={index}>
@@ -58,6 +61,7 @@ const UserPortfolio =(props)=> {
                         </tr>
                     )
                 })}
+                </tbody>
             </table>
         </div>
         <h1>Historical Performance</h1>

@@ -198,8 +198,8 @@ const UserOperation =(props)=> {
                             <>
                             {(result.symbol==="USD")?
                             null
-                            :<>
-                            <div className='search-options' onClick={()=>{goToAsset(result.symbol)}} id={index}>
+                            :<div key={index}>
+                            <div className='search-options' onClick={()=>{goToAsset(result.symbol)}}>
                                 <div className='stock-logo'>
                                     <img src={"https://s3.polygon.io/logos/"+(result.symbol).toLowerCase()+"/logo.png"} alt='Stock Logo'></img>  
                                 </div>
@@ -211,7 +211,7 @@ const UserOperation =(props)=> {
                                 </div>         
                             </div>
                             <div className='spacer'></div>
-                            </>}
+                            </div>}
                             </>
                         )
                     })}
