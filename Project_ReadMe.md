@@ -25,5 +25,6 @@ Project Build with:
 
     - Yahoo Finance API;
     - NASDAQ API;
-
+    
+** - - - At the moment it needs CORS Unblock extension in order for it to work because of the Yahoo Finance API.
 

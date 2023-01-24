@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const UserOperation =(props)=> {
     // Variables
+    const proxyServer = 'https://bamok-server.herokuapp.com/yahoo-finance/'
 
     // States
     const [display, setDisplay] = useState(0);
@@ -159,7 +160,7 @@ const UserOperation =(props)=> {
     //     .catch((error) => console.log(error))     
     // }
     const getInfo = () => {
-        axios.get("https://query1.finance.yahoo.com/v10/finance/quoteSummary/"+ ((props.currentAsset).toLowerCase()) +"?modules=assetProfile")
+        axios.get(proxyServer+"assetProfile/"+ ((props.currentAsset).toLowerCase()))
         .then((res) => {
             setAssetInfo(res.data.quoteSummary.result[0].assetProfile)
 
@@ -167,7 +168,7 @@ const UserOperation =(props)=> {
         .catch((error) => console.log(error))     
     }
     const getData = () => {
-        axios.get("https://query1.finance.yahoo.com/v10/finance/quoteSummary/"+ ((props.currentAsset).toLowerCase()) +"?modules=defaultKeyStatistics")
+        axios.get(proxyServer+"defaultKeyStatistics/"+ ((props.currentAsset).toLowerCase()))
         .then((res) => {
             setAssetData(res.data.quoteSummary.result[0].defaultKeyStatistics)
 
@@ -175,7 +176,7 @@ const UserOperation =(props)=> {
         .catch((error) => console.log(error))     
     }
     const getFinance = () => {
-        axios.get("https://query1.finance.yahoo.com/v10/finance/quoteSummary/"+ ((props.currentAsset).toLowerCase()) +"?modules=financialData")
+        axios.get(proxyServer+"financialData/"+ ((props.currentAsset).toLowerCase()))
         .then((res) => {
             setAssetFinance(res.data.quoteSummary.result[0].financialData)
 
